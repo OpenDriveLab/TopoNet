@@ -1,5 +1,5 @@
 # TopoNet
-Topology Reasoning for Driving Scenes
+**Topology Reasoning for Driving Scenes**
 
 Tianyu Li,
 Li Chen,
@@ -41,10 +41,10 @@ The code would be released soon.
 
 ## Main Results
 
-| Method       | backbone  | epoch | DET$_l$ | TOP$_{ll}$ | DET$_t$ | TOP$_{lt}$ | OLS  |
-|--------------|-----------|-------|---------|------------|---------|------------|------|
-| TopoNet      | ResNet-50 | 24    | 22.1    | 2.7        | 59.1    | 14.9       | 34.0 |
-| TopoNet-swin | Swin-t    | 24    | 22.5    | 2.6        | 71.7    | 17.8       | 38.2 |
+|    Method    |  backbone | epoch | DET$_l$ | TOP$_{ll}$ | DET$_t$ | TOP$_{lt}$ |  OLS |
+|:------------:|:---------:|:-----:|:-------:|:----------:|:-------:|:----------:|:----:|
+|    TopoNet   | ResNet-50 |   24  |   22.1  |     2.7    |   59.1  |    14.9    | 34.0 |
+| TopoNet-swin |   Swin-t  |   24  |   22.5  |     2.6    |   71.7  |    17.8    | 38.2 |
 
 ## License
 
