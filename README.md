@@ -1,4 +1,4 @@
-# TopoNet: A New Baseline for Road Topology Reasoning
+# TopoNet: A New Baseline for Scene Topology Reasoning
 
 This reporsitory will contain the source code of **TopoNet** from the paper, [Topology Reasoning for Driving Scenes](https://arxiv.org/abs/2304.05277).
 
