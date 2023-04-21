@@ -48,6 +48,13 @@ If this work is helpful for your research, please consider citing the following 
   journal={arXiv preprint arXiv:2304.05277},
   year={2023}
 }
+
+@article{wang2023openlanev2,
+  title={Road Genome: A Topology Reasoning Benchmark for Scene Understanding in Autonomous Driving}, 
+  author={Wang, Huijie and Liu, Zhenbo and Li, Yang and Li, Tianyu and Chen, Li and Sima, Chonghao and Wang, Yuting and Jiang, Shengyin and Wen, Feng and Xu, Hang and Luo, Ping and Yan, Junchi and Zhang, Wei and Yao, Jun and Qiao, Yu and Li, Hongyang},
+  journal={arXiv preprint arXiv:2304.10440},
+  year={2023}
+}
 ```
 
 ## Related resources
