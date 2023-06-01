@@ -1,17 +1,20 @@
 # TopoNet: A New Baseline for Scene Topology Reasoning
 
-This reporsitory will contain the source code of **TopoNet** from the paper, [Topology Reasoning for Driving Scenes](https://arxiv.org/abs/2304.05277).
+This reporsitory contains the source code of **TopoNet**, [Topology Reasoning for Driving Scenes](https://arxiv.org/abs/2304.05277).
 
 TopoNet is the first end-to-end framework capable of abstracting traffic knowledge beyond conventional perception tasks, ie., **reasoning connections between centerlines and traffic elements** from sensor inputs. It unifies heterogeneous feature
-learning and enhances feature interactions via the graph neural network architecture and the knowledge graph design.
+learning and enhances feature interactions via the graph neural network architecture and the knowledge graph design. 
 
-![method](figs/pipeline.png "Model Architecture")
+We believe instead of recognizing lanes, modelling the laneline topology is the right thing to construct components within perception framework, to facilitate the ultimate driving comfort. This is in accordance with the [UniAD philosophy](https://github.com/OpenDriveLab/UniAD).
 
 > **Topology Reasoning for Driving Scenes**
 > 
-> Tianyu Li*, Li Chen*, etc., Hongyang Li.
+> Tianyu Li*, Li Chen*, etc., Hongyang Li
 >
 > Paper: [Full paper on arXiv](https://arxiv.org/abs/2304.05277)
+
+![method](figs/pipeline.png "Model Architecture")
+
 
 
 ## News
