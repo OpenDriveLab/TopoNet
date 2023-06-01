@@ -9,14 +9,14 @@ learning and enhances feature interactions via the graph neural network architec
 
 > **Topology Reasoning for Driving Scenes**
 > 
-> Tianyu Li*, Li Chen*†, Xiangwei Geng, Huijie Wang, Yang Li, Zhenbo Liu, Shengyin Jiang, Yuting Wang, Hang Xu, Chunjing Xu, Feng Wen, Ping Luo, Junchi Yan, Wei Zhang, Xiaogang Wang, Yu Qiao, Hongyang Li†.
+> Tianyu Li*, Li Chen*, etc., Hongyang Li.
 >
 > Paper: [Full paper on arXiv](https://arxiv.org/abs/2304.05277)
 
 
 ## News
 
-- Code & model will be released **around June**. Please stay tuned!
+- Code & model will be released **around Late July**. Please stay tuned!
 - [2023/4/11] TopoNet [paper](https://arxiv.org/abs/2304.05277) is available on arXiv.
 
 ## Main Results
