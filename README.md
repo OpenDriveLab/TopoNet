@@ -65,7 +65,5 @@ If this work is helpful for your research, please consider citing the following 
 We acknowledge all the open source contributors for the following projects to make this work possible:
 
 - [Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V2)
-- [mmdet3d](https://github.com/open-mmlab/mmdetection3d)
 - [BEVFormer](https://github.com/fundamentalvision/BEVFormer)
-- [MapTR](https://github.com/hustvl/MapTR)
 
