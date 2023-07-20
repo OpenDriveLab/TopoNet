@@ -7,9 +7,9 @@ learning and enhances feature interactions via the graph neural network architec
 
 We believe instead of recognizing lanes, modelling the laneline topology is the right thing to construct components within perception framework, to facilitate the ultimate driving comfort. This is in accordance with the [UniAD philosophy](https://github.com/OpenDriveLab/UniAD).
 
-> **Topology Reasoning for Driving Scenes**
+> **Graph-based Topology Reasoning for Driving Scenes**
 > 
-> Tianyu Li*, Li Chen*, etc., Hongyang Li
+> Tianyu Li*, Li Chen*, _etc._, Ping Luo and Hongyang Li
 >
 > Paper: [Full paper on arXiv](https://arxiv.org/abs/2304.05277)
 
@@ -19,7 +19,7 @@ We believe instead of recognizing lanes, modelling the laneline topology is the 
 
 ## News
 
-- Code & model will be released **around Late July**. Please stay tuned!
+- [2023/7/20] Code & model will be released in **`Late August`**. Please stay tuned!
 - [2023/4/11] TopoNet [paper](https://arxiv.org/abs/2304.05277) is available on arXiv.
 
 ## Main Results
