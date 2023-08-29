@@ -1,41 +1,138 @@
+<div align="center">
+
 # TopoNet: A New Baseline for Scene Topology Reasoning
 
-This reporsitory contains the source code of **TopoNet**, [Topology Reasoning for Driving Scenes](https://arxiv.org/abs/2304.05277).
+## Graph-based Topology Reasoning for Driving Scenes
 
-TopoNet is the first end-to-end framework capable of abstracting traffic knowledge beyond conventional perception tasks, ie., **reasoning connections between centerlines and traffic elements** from sensor inputs. It unifies heterogeneous feature
-learning and enhances feature interactions via the graph neural network architecture and the knowledge graph design. 
-
-We believe instead of recognizing lanes, modelling the laneline topology is the right thing to construct components within perception framework, to facilitate the ultimate driving comfort. This is in accordance with the [UniAD philosophy](https://github.com/OpenDriveLab/UniAD).
-
-> **Graph-based Topology Reasoning for Driving Scenes**
-> 
-> Tianyu Li*, Li Chen*, _etc._, Ping Luo and Hongyang Li
->
-> Paper: [Full paper on arXiv](https://arxiv.org/abs/2304.05277)
+[![arXiv](https://img.shields.io/badge/arXiv-2304.05277-479ee2.svg)](https://arxiv.org/abs/2304.05277)
+[![OpenLane-V2](https://img.shields.io/badge/GitHub-OpenLane--V2-blueviolet.svg)](https://github.com/OpenDriveLab/OpenLane-V2)
+[![LICENSE](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](./LICENSE)
 
 ![method](figs/pipeline.png "Model Architecture")
 
 
+</div>
+
+> - Production from [OpenDriveLab](https://opendrivelab.com). Jointly with our fellow collaborators at Huawei Noah's Ark Lab, Fudan University, and [HKU MMLab](http://luoping.me/).
+> - Primary contact: [Tianyu Li](https://scholar.google.com/citations?user=X6vTmEMAAAAJ) ( litianyu@opendrivelab.com ) or/and [Li Chen](https://scholar.google.com/citations?user=ulZxvY0AAAAJ).
+
+---
+
+This repository contains the source code of **TopoNet**, [Graph-based Topology Reasoning for Driving Scenes](https://arxiv.org/abs/2304.05277).
+
+TopoNet is the first end-to-end framework capable of abstracting traffic knowledge beyond conventional perception tasks, _i.e._, **reasoning connections between centerlines and traffic elements** from sensor inputs. It unifies heterogeneous feature
+learning and enhances feature interactions via the graph neural network architecture and the knowledge graph design. 
+
+Instead of recognizing lanes, we adhere that modeling the lane topology is `appropriate` to construct road components within the perception framework, to facilitate the ultimate driving comfort. 
+This is in accordance with the [UniAD philosophy](https://github.com/OpenDriveLab/UniAD).
+
+## Table of Contents
+- [News](#news)
+- [Main Results](#main-results)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Prepare Dataset](#prepare-dataset)
+- [Train and Evaluate](#train-and-evaluate)
+- [License](#license)
+- [Citation](#citation)
 
 ## News
 
-- [2023/7/20] Code & model will be released in **`Late August`**. Please stay tuned!
-- [2023/4/11] TopoNet [paper](https://arxiv.org/abs/2304.05277) is available on arXiv.
+- **`Pinned:`** The [leaderboard](https://opendrivelab.com/AD23Challenge.html#openlane_topology) for Lane Topology Challenge is open for regular submissions year around. This Challenge **`would`** be back in 2024's edition.
+- **`[2023/08]`** The code of TopoNet is released!
+- **`[2023/04]`** TopoNet [paper](https://arxiv.org/abs/2304.05277) is available on arXiv.
+- **`[2023/01]`** Introducing [Autonomous Driving Challenge](https://opendrivelab.com/AD23Challenge.html) for Lane Topology at CVPR 2023.
 
 ## Main Results
 
-We provide results on [Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V2). Models will be released together with codes.
+We provide results on **[Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V2) subset-A val** set.
 
-|    Method    |  Backbone | Epoch | DET<sub>l</sub> | DET<sub>l,chamfer</sub> | TOP<sub>ll</sub> | DET<sub>t</sub> | TOP<sub>lt</sub> |  OLS | Model
-|:------------:|:---------:|:-----:|:-------:|:-------:|:----------:|:-------:|:----------:|:----:|:------:|
-|     STSU     | ResNet-50 |   24  |   12.0  |  11.5  |     0.3    |   **62.3**  |    10.1    | 27.9 |    -    |
-| VectorMapNet | ResNet-50 |   24  |   11.3  |  13.4  |     0.1    |   58.5  |    6.2     | 24.5 |    -    |
-|     MapTR    | ResNet-50 |   24  |   8.3   |  17.7  |     0.2    |   60.7  |    5.8     | 24.3 |    -    |
-|     MapTR*   | ResNet-50 |   24  |   8.3   |  17.7  |     1.1    |   60.7  |    10.1    | 30.2 |    -    |
-|    **TopoNet**   | ResNet-50 |   24  |   **22.1**  |  **20.2**  |     **2.7**    |   59.1  |    **14.9**    | **34.0** |    -    |
-<!-- | TopoNet-swin |   Swin-t  |   24  |   22.5  |  21.7  |     2.6    |   71.7  |    17.8    | 38.2 |    -    | -->
-
+|    Method    | Backbone  | Epoch | DET<sub>l</sub> | TOP<sub>ll</sub> | DET<sub>t</sub> | TOP<sub>lt</sub> |   OLS    |
+| :----------: | :-------: | :---: | :-------------: | :--------------: | :-------------: | :--------------: | :------: |
+|     STSU     | ResNet-50 |  24   |      12.7       |       0.5        |      43.0       |       15.1       |   25.4   |
+| VectorMapNet | ResNet-50 |  24   |      11.1       |       0.4        |      41.7       |       6.2        |   20.8   |
+|    MapTR     | ResNet-50 |  24   |       8.3       |       0.2        |      43.5       |       5.8        |   20.0   |
+|    MapTR*    | ResNet-50 |  24   |      17.7       |       1.1        |      43.5       |       10.4       |   26.0   |
+| **TopoNet**  | ResNet-50 |  24   |    **28.5**     |     **4.1**      |    **48.1**     |     **20.8**     | **35.6** |
 > $*$: evaluation based on matching results on Chamfer distance.
+
+## Prerequisites
+
+- Linux
+- Python 3.8.x
+- NVIDIA GPU + CUDA 11.1
+- PyTorch 1.9.1
+
+## Installation
+
+We recommend using [conda](https://docs.conda.io/en/latest/miniconda.html) to run the code.
+```bash
+conda create -n toponet python=3.8 -y
+conda activate toponet
+
+# (optional) If you have CUDA installed on your computer, skip this step.
+conda install cudatoolkit=11.1.1 -c conda-forge
+
+pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+Install mm-series packages.
+```bash
+pip install mmcv-full==1.5.2 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.9.0/index.html
+pip install mmdet==2.26.0
+pip install mmsegmentation==0.29.1
+pip install mmdet3d==1.0.0rc6
+```
+
+Install other required packages.
+```bash
+pip install -r requirements.txt
+```
+
+## Prepare Dataset
+
+Following [OpenLane-V2 repo](https://github.com/OpenDriveLab/OpenLane-V2/blob/v1.0.0/data) to download the data and run the [preprocessing](https://github.com/OpenDriveLab/OpenLane-V2/tree/v1.0.0/data#preprocess) code.
+
+```bash
+cd TopoNet
+mkdir data && cd data
+
+ln -s {PATH to OpenLane-V2 repo}\data\OpenLane-V2
+```
+
+After setup, the hierarchy of folder `data` is described below:
+```
+data/OpenLane-V2
+├── train
+|   └── ...
+├── val
+|   └── ...
+├── test
+|   └── ...
+├── data_dict_subset_A_train.pkl
+├── data_dict_subset_A_val.pkl
+├── ...
+```
+
+## Train and Evaluate
+
+### Train
+
+We recommend using 8 GPUs for training. If a different number of GPUs is utilized, you can enhance performance by configuring the `--autoscale-lr` option. The training logs will be saved to `work_dirs/toponet`.
+
+```bash
+cd TopoNet
+mkdir -p work_dirs/toponet
+
+./tools/dist_train.sh 8 [--autoscale-lr]
+```
+
+### Evaluate
+You can set `--show` to visualize the results.
+
+```bash
+./tools/dist_test.sh 8 [--show]
+```
 
 ## License
 
@@ -46,8 +143,8 @@ If this work is helpful for your research, please consider citing the following 
 
 ``` bibtex
 @article{li2023toponet,
-  title={Topology Reasoning for Driving Scenes},
-  author={Li, Tianyu and Chen, Li and Geng, Xiangwei and Wang, Huijie and Li, Yang and Liu, Zhenbo and Jiang, Shengyin and Wang, Yuting and Xu, Hang and Xu, Chunjing and Wen, Feng and Luo, Ping and Yan, Junchi and Zhang, Wei and Wang, Xiaogang and Qiao, Yu and Li, Hongyang},
+  title={Graph-based Topology Reasoning for Driving Scenes},
+  author={Li, Tianyu and Chen, Li and Wang, Huijie and Li, Yang and Yang, Jiazhi and Geng, Xiangwei and Jiang, Shengyin and Wang, Yuting and Xu, Hang and Xu, Chunjing and Yan, Junchi and Luo, Ping and Li, Hongyang},
   journal={arXiv preprint arXiv:2304.05277},
   year={2023}
 }
@@ -62,8 +159,7 @@ If this work is helpful for your research, please consider citing the following 
 
 ## Related resources
 
-We acknowledge all the open source contributors for the following projects to make this work possible:
+We acknowledge all the open-source contributors for the following projects to make this work possible:
 
 - [Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V2)
 - [BEVFormer](https://github.com/fundamentalvision/BEVFormer)
-

@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Custom
+ckpts
+data
+work_dirs
+.vscode
