@@ -42,9 +42,6 @@ class CustomFormatBundle3DLane(DefaultFormatBundle3D):
         if 'gt_lane_lcte_adj' in results:
             results['gt_lane_lcte_adj'] = DC(
                 to_tensor(results['gt_lane_lcte_adj']))
-        if 'sd_map_patch' in results:
-            results['sd_map_patch'] = DC(
-                to_tensor(results['sd_map_patch']))
 
         results = super(CustomFormatBundle3DLane, self).__call__(results)
         return results

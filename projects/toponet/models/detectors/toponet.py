@@ -186,7 +186,6 @@ class TopoNet(MVXTwoStageDetector):
                     name, type(var)))
         img = [img] if img is None else img
 
-        # pdb.set_trace()
         if img_metas[0]['scene_token'] != self.prev_frame_info['scene_token']:
             # the first sample of each scene is truncated
             self.prev_frame_info['prev_bev'] = None

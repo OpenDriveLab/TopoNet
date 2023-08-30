@@ -331,7 +331,7 @@ class RandomScaleImageMultiViewImage(object):
 
     def __init__(self, scales=[]):
         self.scales = scales
-        assert len(self.scales)==1
+        assert len(self.scales) == 1
 
     def __resize_bboxes(self, results, scale_factor):
         """Resize bboxes according to the scale factor.
@@ -448,7 +448,7 @@ class CropFrontViewImageForAv2(object):
     def _crop_cam_intrinsic(self, results):
         results['cam_intrinsic'][0][1, 2] -= self.crop_h[0]
         results['lidar2img'][0] = results['cam_intrinsic'][0] @ results['lidar2cam'][0]
-    
+
     def _crop_bbox(self, results):
         if 'gt_bboxes' in results.keys():
             results['gt_bboxes'][:, 1] -= self.crop_h[0]

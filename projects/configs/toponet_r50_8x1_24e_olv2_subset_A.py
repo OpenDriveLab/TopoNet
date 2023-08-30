@@ -159,7 +159,7 @@ model = dict(
             loss_weight=1.0),
         loss_bbox=dict(type='L1Loss', loss_weight=2.5),
         loss_iou=dict(type='GIoULoss', loss_weight=1.0),
-        test_cfg=dict(max_per_img=50)),
+        test_cfg=dict(max_per_img=100)),
     lane_head=dict(
         type='TopoNetHead',
         num_classes=1,
@@ -246,15 +246,15 @@ model = dict(
 
 train_pipeline = [
     dict(type='CustomLoadMultiViewImageFromFiles', to_float32=True),
+    dict(type='LoadAnnotations3DLane',
+         with_lane_3d=True, with_lane_label_3d=True, with_lane_adj=True,
+         with_bbox=True, with_label=True, with_lane_lcte_adj=True),
     dict(type='PhotoMetricDistortionMultiViewImage'),
     dict(type='CropFrontViewImageForAv2'),
     dict(type='RandomScaleImageMultiViewImage', scales=[0.5]),
     dict(type='NormalizeMultiviewImage', **img_norm_cfg),
     dict(type='PadMultiViewImageSame2Max', size_divisor=32),
     dict(type='GridMaskMultiViewImage'),
-    dict(type='LoadAnnotations3DLane',
-         with_lane_3d=True, with_lane_label_3d=True, with_lane_adj=True,
-         with_bbox=True, with_label=True, with_lane_lcte_adj=True),
     dict(type='LaneParameterize3D', method=para_method, method_para=method_para),
     dict(type='CustomFormatBundle3DLane', class_names=class_names),
     dict(type='CustomCollect3D', keys=[

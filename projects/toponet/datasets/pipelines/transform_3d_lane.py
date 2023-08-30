@@ -28,7 +28,6 @@ class LaneParameterize3D(object):
             dict: Normalized results, 'img_norm_cfg' key is added into
                 result dict.
         """
-        # print('results', results.keys())
         lanes = results['gt_lanes_3d']
         para_lanes = getattr(self, self.method)(lanes, **self.method_para)
         results['gt_lanes_3d'] = para_lanes
