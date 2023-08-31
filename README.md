@@ -39,9 +39,10 @@ This is in accordance with the [UniAD philosophy](https://github.com/OpenDriveLa
 ## News
 
 - **`Pinned:`** The [leaderboard](https://opendrivelab.com/AD23Challenge.html#openlane_topology) for Lane Topology Challenge is open for regular submissions year around. This Challenge **`would`** be back in 2024's edition.
-- **`[2023/08]`** The code of TopoNet is released!
+- **`[2023/08]`** The code and model of TopoNet is released!
 - **`[2023/04]`** TopoNet [paper](https://arxiv.org/abs/2304.05277) is available on arXiv.
 - **`[2023/01]`** Introducing [Autonomous Driving Challenge](https://opendrivelab.com/AD23Challenge.html) for Lane Topology at CVPR 2023.
+
 
 ## Main Results
 
@@ -55,6 +56,14 @@ We provide results on **[Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V
 |    MapTR*    | ResNet-50 |  24   |      17.7       |       1.1        |      43.5       |       10.4       |   26.0   |
 | **TopoNet**  | ResNet-50 |  24   |    **28.5**     |     **4.1**      |    **48.1**     |     **20.8**     | **35.6** |
 > $*$: evaluation based on matching results on Chamfer distance.
+
+
+## Model Zoo
+
+| Model | Dataset | Backbone | Epoch |  OLS  | Memory | Config | Download |
+| :---: | :-----: | :------: | :---: | :---: | :----: | :----: | :------: |
+| TopoNet-R50 | subset-A | ResNet-50 | 24 | 34.8 | 12.3G | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_A.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/toponet_r50_8x1_24e_olv2_subset_A.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/train.230830.014007.log) |
+
 
 ## Prerequisites
 
