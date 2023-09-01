@@ -19,9 +19,10 @@ from mmdet.datasets import DATASETS
 from mmdet3d.datasets import Custom3DDataset
 from openlanev2.evaluation import evaluate as openlanev2_evaluate
 from openlanev2.utils import format_metric
+from openlanev2.visualization import draw_annotation_pv, assign_attribute, assign_topology
 
 from ..core.lane.util import fix_pts_interpolate
-from ..core.visualizer.lane import show_results, show_bev_results
+from ..core.visualizer.lane import show_bev_results
 
 
 @DATASETS.register_module()
@@ -70,7 +71,7 @@ class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
                 data_infos = [info for info in data_infos.values() if info['meta_data']['source_id'] not in self.MAP_CHANGE_LOGS]
             else:
                 data_infos = list(data_infos.values())
-        return data_infos
+        return data_infos[:100]
 
     def get_data_info(self, index):
         """Get data info according to the given index.
@@ -387,49 +388,45 @@ class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
                 break
 
             info = self.data_infos[idx]
-            pred_result = self.format_results([result])
-
-            result = list(pred_result['results'].values())[0]['predictions']
-            input_dict = self.get_data_info(idx)
-            img_paths = input_dict['img_filename']
-            lidar2imgs = input_dict['lidar2img']
-            images = [mmcv.imread(img_path) for img_path in img_paths]
 
             gt_lanes = []
             for lane in info['annotation']['lane_centerline']:
                 gt_lanes.append(lane['points'])
             gt_lclc = info['annotation']['topology_lclc']
 
-            gt_tes = []
-            for te in info['annotation']['traffic_element']:
-                gt_tes.append((te['points'].flatten(), te['attribute']))
+            pred_result = self.format_results([result])
+            pred_result = list(pred_result['results'].values())[0]['predictions']
+            pred_result = self._filter_by_confidence(pred_result, score_thr)
+            pred_result = assign_attribute(pred_result)
+            pred_result = assign_topology(pred_result)
 
             pred_lanes = []
-            lane_scores = []
-            for lane in result['lane_centerline']:
+            for lane in pred_result['lane_centerline']:
+                lane['points'] = fix_pts_interpolate(lane['points'], 50)
                 pred_lanes.append(lane['points'])
-                lane_scores.append(lane['confidence'])
             pred_lanes = np.array(pred_lanes)
-            lane_scores = np.array(lane_scores)
-            mask = lane_scores > score_thr
-            pred_lanes = pred_lanes[mask]
-            pred_lclc = result['topology_lclc'][mask][:, mask] >= 0.5
+            pred_lclc = pred_result['topology_lclc']
 
-            pred_tes = []
-            if result['traffic_element'] is not None:
-                for pred_te in result['traffic_element']:
-                    if pred_te['confidence'] < score_thr:
-                        continue
-                    class_idx = pred_te['attribute']
-                    te = pred_te['points'].flatten()
-                    pred_tes.append((te, class_idx))
+            pv_imgs = []
+            for cam_name, cam_info in info['sensor'].items():
+                image_path = os.path.join(self.data_root, cam_info['image_path'])
+                image_pv = mmcv.imread(image_path, channel_order='rgb')
+                image_pv = draw_annotation_pv(
+                    cam_name,
+                    image_pv,
+                    pred_result,
+                    cam_info['intrinsic'],
+                    cam_info['extrinsic'],
+                    with_attribute=True if cam_name == 'ring_front_center' else False,
+                    with_topology=True if cam_name == 'ring_front_center' else False,
+                )
+                pv_imgs.append(image_pv[..., ::-1])
 
-            images = show_results(images, lidar2imgs, gt_lanes, pred_lanes, gt_tes, pred_tes)
-            for cam_idx, image in enumerate(images[:1]):
+            for cam_idx, image in enumerate(pv_imgs[:1]):
                 output_path = os.path.join(out_dir, f'{info["segment_id"]}/{info["timestamp"]}/{self.CAMS[cam_idx]}.jpg')
                 mmcv.imwrite(image, output_path)
 
-            surround_img = self._render_surround_img(images)
+            surround_img = self._render_surround_img(pv_imgs)
             output_path = os.path.join(out_dir, f'{info["segment_id"]}/{info["timestamp"]}/surround.jpg')
             mmcv.imwrite(surround_img, output_path)
 
@@ -445,7 +442,8 @@ class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
             output_path = os.path.join(out_dir, f'{info["segment_id"]}/{info["timestamp"]}/conn.jpg')
             mmcv.imwrite(conn_img, output_path)
 
-    def _render_surround_img(self, images):
+    @staticmethod
+    def _render_surround_img(images):
         all_image = []
         img_height = images[1].shape[0]
 
@@ -473,3 +471,33 @@ class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
         surround_img = cv2.resize(surround_img, None, fx=0.5, fy=0.5)
 
         return surround_img
+
+    @staticmethod
+    def _filter_by_confidence(annotations, threshold=0.3):
+        annotations = annotations.copy()
+        lane_centerline = annotations['lane_centerline']
+        lc_mask = []
+        lcs = []
+        for lc in lane_centerline:
+            if lc['confidence'] > threshold:
+                lc_mask.append(True)
+                lcs.append(lc)
+            else:
+                lc_mask.append(False)
+        lc_mask = np.array(lc_mask, dtype=bool)
+        traffic_elements = annotations['traffic_element']
+        te_mask = []
+        tes = []
+        for te in traffic_elements:
+            if te['confidence'] > threshold:
+                te_mask.append(True)
+                tes.append(te)
+            else:
+                te_mask.append(False)
+        te_mask = np.array(te_mask, dtype=bool)
+
+        annotations['lane_centerline'] = lcs
+        annotations['traffic_element'] = tes
+        annotations['topology_lclc'] = annotations['topology_lclc'][lc_mask][:, lc_mask] > 0.5
+        annotations['topology_lcte'] = annotations['topology_lcte'][lc_mask][:, te_mask] > 0.5
+        return annotations
