@@ -71,7 +71,7 @@ class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
                 data_infos = [info for info in data_infos.values() if info['meta_data']['source_id'] not in self.MAP_CHANGE_LOGS]
             else:
                 data_infos = list(data_infos.values())
-        return data_infos[:100]
+        return data_infos
 
     def get_data_info(self, index):
         """Get data info according to the given index.
