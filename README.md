@@ -62,7 +62,7 @@ We provide results on **[Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V
 
 | Model | Dataset | Backbone | Epoch |  OLS  | Memory | Config | Download |
 | :---: | :-----: | :------: | :---: | :---: | :----: | :----: | :------: |
-| TopoNet-R50 | subset-A | ResNet-50 | 24 | 34.8 | 12.3G | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_A.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/toponet_r50_8x1_24e_olv2_subset_A.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/train.230830.014007.log) |
+| TopoNet-R50 | subset-A | ResNet-50 | 24 | 34.8 | 12.3G | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_A.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/toponet_r50_8x1_24e_olv2_subset_A.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/train.231017.113802.log) |
 
 
 ## Prerequisites
