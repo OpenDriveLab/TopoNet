@@ -283,6 +283,7 @@ data = dict(
         classes=class_names,
         modality=input_modality,
         split='train',
+        filter_map_change=True,
         test_mode=False),
     val=dict(
         type=dataset_type,
