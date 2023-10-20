@@ -55,14 +55,14 @@ We provide results on **[Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V
 |    MapTR     | ResNet-50 |  24   |       8.3       |       0.2        |      43.5       |       5.8        |   20.0   |
 |    MapTR*    | ResNet-50 |  24   |      17.7       |       1.1        |      43.5       |       10.4       |   26.0   |
 | **TopoNet**  | ResNet-50 |  24   |    **28.5**     |     **4.1**      |    **48.1**     |     **20.8**     | **35.6** |
-> $*$: evaluation based on matching results on Chamfer distance.
+> *: evaluation based on matching results on Chamfer distance.
 
 
 ## Model Zoo
 
 | Model | Dataset | Backbone | Epoch |  OLS  | Memory | Config | Download |
 | :---: | :-----: | :------: | :---: | :---: | :----: | :----: | :------: |
-| TopoNet-R50 | subset-A | ResNet-50 | 24 | 34.8 | 12.3G | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_A.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/toponet_r50_8x1_24e_olv2_subset_A.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/train.231017.113802.log) |
+| TopoNet-R50 | subset-A | ResNet-50 | 24 | 35.6 | 12.3G | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_A.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/toponet_r50_8x1_24e_olv2_subset_A.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/train.231017.113802.log) |
 
 
 ## Prerequisites
