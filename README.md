@@ -54,9 +54,20 @@ We provide results on **[Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V
 | VectorMapNet | ResNet-50 |  24   |      11.1       |       0.4        |      41.7       |       6.2        |   20.8   |
 |    MapTR     | ResNet-50 |  24   |       8.3       |       0.2        |      43.5       |       5.8        |   20.0   |
 |    MapTR*    | ResNet-50 |  24   |      17.7       |       1.1        |      43.5       |       10.4       |   26.0   |
-| **TopoNet**  | ResNet-50 |  24   |    **28.5**     |     **4.1**      |    **48.1**     |     **20.8**     | **35.6** |
-> *: evaluation based on matching results on Chamfer distance.
+| **TopoNet**  | ResNet-50 |  24   |    **28.6**     |     **4.1**      |    **48.6**     |     **20.3**     | **35.6** |
 
+:fire:: Based on the updated `v1.1` OpenLane-V2 devkit and metrics, we have reassessed the performance of TopoNet and other SOTA models. For more details please see issue [#76](https://github.com/OpenDriveLab/OpenLane-V2/issues/76) of OpenLane-V2.
+
+|    Method    | Backbone  | Epoch | DET<sub>l</sub> | TOP<sub>ll</sub> | DET<sub>t</sub> | TOP<sub>lt</sub> |   OLS    |
+| :----------: | :-------: | :---: | :-------------: | :--------------: | :-------------: | :--------------: | :------: |
+|     STSU     | ResNet-50 |  24   |      12.7       |       2.9        |      43.0       |       19.8       |   29.3   |
+| VectorMapNet | ResNet-50 |  24   |      11.1       |       2.7        |      41.7       |       9.2        |   24.9   |
+|    MapTR     | ResNet-50 |  24   |       8.3       |       2.3        |      43.5       |       8.9        |   24.2   |
+|    MapTR*    | ResNet-50 |  24   |      17.7       |       5.9        |      43.5       |       15.1       |   31.0   |
+| **TopoNet**  | ResNet-50 |  24   |    **28.6**     |     **10.9**     |    **48.6**     |     **23.8**     | **39.8** |
+
+> *: evaluation based on matching results on Chamfer distance.  
+> The result of TopoNet is from this repo.
 
 ## Model Zoo
 
