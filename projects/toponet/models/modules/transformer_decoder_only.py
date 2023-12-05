@@ -35,16 +35,18 @@ class TopoNetTransformerDecoderOnly(BaseModule):
     def __init__(self,
                  decoder=None,
                  embed_dims=256,
+                 pts_dim=3,
                  **kwargs):
         super(TopoNetTransformerDecoderOnly, self).__init__(**kwargs)
         self.decoder = build_transformer_layer_sequence(decoder)
         self.embed_dims = embed_dims
         self.fp16_enabled = False
+        self.pts_dim = pts_dim
         self.init_layers()
 
     def init_layers(self):
         """Initialize layers of the Detr3DTransformer."""
-        self.reference_points = nn.Linear(self.embed_dims, 3)
+        self.reference_points = nn.Linear(self.embed_dims, self.pts_dim)
 
     def init_weights(self):
         """Initialize the transformer weights."""

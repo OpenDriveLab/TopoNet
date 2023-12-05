@@ -39,12 +39,15 @@ This is in accordance with the [UniAD philosophy](https://github.com/OpenDriveLa
 ## News
 
 - **`Pinned:`** The [leaderboard](https://opendrivelab.com/AD23Challenge.html#openlane_topology) for Lane Topology Challenge is open for regular submissions year around. This Challenge **`would`** be back in 2024's edition.
+- **`[2023/11]`** :fire:The code and model of OpenLane-V2 subset-B is released!
 - **`[2023/08]`** The code and model of TopoNet is released!
 - **`[2023/04]`** TopoNet [paper](https://arxiv.org/abs/2304.05277) is available on arXiv.
 - **`[2023/01]`** Introducing [Autonomous Driving Challenge](https://opendrivelab.com/AD23Challenge.html) for Lane Topology at CVPR 2023.
 
 
 ## Main Results
+
+### Results on OpenLane-V2 subset-A val
 
 We provide results on **[Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V2) subset-A val** set.
 
@@ -69,11 +72,22 @@ We provide results on **[Openlane-V2](https://github.com/OpenDriveLab/OpenLane-V
 > *: evaluation based on matching results on Chamfer distance.  
 > The result of TopoNet is from this repo.
 
+
+### Results on OpenLane-V2 subset-B val
+
+|    Method    | Backbone  | Epoch | DET<sub>l</sub> | TOP<sub>ll</sub> | DET<sub>t</sub> | TOP<sub>lt</sub> |   OLS    |
+| :----------: | :-------: | :---: | :-------------: | :--------------: | :-------------: | :--------------: | :------: |
+| **TopoNet**  | ResNet-50 |  24   |    **24.4**     |     **6.7**      |    **52.6**     |     **16.7**     | **36.0** |
+
+> The result is based on the updated `v1.1` OpenLane-V2 devkit and metrics.  
+> The result of TopoNet is from this repo.
+
 ## Model Zoo
 
 | Model | Dataset | Backbone | Epoch |  OLS  | Memory | Config | Download |
 | :---: | :-----: | :------: | :---: | :---: | :----: | :----: | :------: |
-| TopoNet-R50 | subset-A | ResNet-50 | 24 | 35.6 | 12.3G | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_A.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/toponet_r50_8x1_24e_olv2_subset_A.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/train.231017.113802.log) |
+| TopoNet-R50 | subset-A | ResNet-50 | 24 | 39.8 | 12.3G | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_A.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/toponet_r50_8x1_24e_olv2_subset_A.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_A/resolve/main/train.231017.113802.log) |
+| TopoNet-R50 | subset-B | ResNet-50 | 24 | 36.0 | 8.2G  | [config](projects/configs/toponet_r50_8x1_24e_olv2_subset_B.py) | [model](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_B/resolve/main/toponet_r50_8x1_24e_olv2_subset_B.pth)/[log](https://huggingface.co/OpenDrive/toponet_r50_8x1_24e_olv2_subset_B/resolve/main/20231127_121131.log) |
 
 
 ## Prerequisites
@@ -117,7 +131,7 @@ Following [OpenLane-V2 repo](https://github.com/OpenDriveLab/OpenLane-V2/blob/v1
 cd TopoNet
 mkdir data && cd data
 
-ln -s {PATH to OpenLane-V2 repo}\data\OpenLane-V2
+ln -s {PATH to OpenLane-V2 repo}/data/OpenLane-V2
 ```
 
 After setup, the hierarchy of folder `data` is described below:
@@ -131,6 +145,8 @@ data/OpenLane-V2
 |   └── ...
 ├── data_dict_subset_A_train.pkl
 ├── data_dict_subset_A_val.pkl
+├── data_dict_subset_B_train.pkl
+├── data_dict_subset_B_val.pkl
 ├── ...
 ```
 

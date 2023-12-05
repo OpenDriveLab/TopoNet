@@ -3,7 +3,7 @@ custom_imports = dict(imports=['projects.bevformer', 'projects.toponet'])
 
 # If point cloud range is changed, the models should also change their point
 # cloud range accordingly
-point_cloud_range = [-51.2, -25.6, -2.3, 51.2, 25.6, 1.7]
+point_cloud_range = [-51.2, -25.6, -2.0, 51.2, 25.6, 2.0]
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
@@ -16,10 +16,10 @@ input_modality = dict(
     use_radar=False,
     use_map=False,
     use_external=False)
-num_cams = 7
-pts_dim = 3
+num_cams = 6
+pts_dim = 2
 
-dataset_type = 'OpenLaneV2_subset_A_Dataset'
+dataset_type = 'OpenLaneV2_subset_B_Dataset'
 data_root = 'data/OpenLane-V2/'
 
 para_method = 'fix_pts_interp'
@@ -253,7 +253,6 @@ train_pipeline = [
          with_lane_3d=True, with_lane_label_3d=True, with_lane_adj=True,
          with_bbox=True, with_label=True, with_lane_lcte_adj=True),
     dict(type='PhotoMetricDistortionMultiViewImage'),
-    dict(type='CropFrontViewImageForAv2'),
     dict(type='RandomScaleImageMultiViewImage', scales=[0.5]),
     dict(type='NormalizeMultiviewImage', **img_norm_cfg),
     dict(type='PadMultiViewImageSame2Max', size_divisor=32),
@@ -267,7 +266,6 @@ train_pipeline = [
 
 test_pipeline = [
     dict(type='CustomLoadMultiViewImageFromFiles', to_float32=True),
-    dict(type='CropFrontViewImageForAv2'),
     dict(type='RandomScaleImageMultiViewImage', scales=[0.5]),
     dict(type='NormalizeMultiviewImage', **img_norm_cfg),
     dict(type='PadMultiViewImageSame2Max', size_divisor=32),
@@ -281,7 +279,7 @@ data = dict(
     train=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'data_dict_subset_A_train.pkl',
+        ann_file=data_root + 'data_dict_subset_B_train.pkl',
         pipeline=train_pipeline,
         classes=class_names,
         modality=input_modality,
@@ -291,7 +289,7 @@ data = dict(
     val=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'data_dict_subset_A_val.pkl',
+        ann_file=data_root + 'data_dict_subset_B_val.pkl',
         pipeline=test_pipeline,
         classes=class_names,
         modality=input_modality,
@@ -300,7 +298,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'data_dict_subset_A_val.pkl',
+        ann_file=data_root + 'data_dict_subset_B_val.pkl',
         pipeline=test_pipeline,
         classes=class_names,
         modality=input_modality,

@@ -29,7 +29,7 @@ from ..core.visualizer.lane import show_bev_results
 class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
     CAMS = ('ring_front_center', 'ring_front_left', 'ring_front_right',
             'ring_rear_left', 'ring_rear_right', 'ring_side_left', 'ring_side_right')
-    LANE_CLASSES = ('centerline')
+    LANE_CLASSES = ('centerline',)
     TE_CLASSES = ('traffic_light', 'road_sign')
     TE_ATTR_CLASSES = ('unknown', 'red', 'green', 'yellow',
                        'go_straight', 'turn_left', 'turn_right',
@@ -417,8 +417,8 @@ class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
                     pred_result,
                     cam_info['intrinsic'],
                     cam_info['extrinsic'],
-                    with_attribute=True if cam_name == 'ring_front_center' else False,
-                    with_topology=True if cam_name == 'ring_front_center' else False,
+                    with_attribute=True if cam_name == self.CAMS[0] else False,
+                    with_topology=True if cam_name == self.CAMS[0] else False,
                 )
                 pv_imgs.append(image_pv[..., ::-1])
 

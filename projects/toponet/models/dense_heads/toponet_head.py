@@ -39,6 +39,7 @@ class TopoNetHead(AnchorFreeHead):
                  bev_h=30,
                  bev_w=30,
                  pc_range=None,
+                 pts_dim=3,
                  sync_cls_avg_factor=False,
                  loss_cls=dict(
                      type='CrossEntropyLoss',
@@ -109,14 +110,17 @@ class TopoNetHead(AnchorFreeHead):
         self.bev_w = bev_w
         self.fp16_enabled = False
 
+        assert pts_dim in (2, 3)
+        self.pts_dim = pts_dim
+
         if 'code_size' in kwargs:
             self.code_size = kwargs['code_size']
         else:
-            self.code_size = 6
+            self.code_size = pts_dim * 11
         if code_weights is not None:
             self.code_weights = code_weights
         else:
-            self.code_weights = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+            self.code_weights = [1.0, ] * self.code_size
         self.code_weights = nn.Parameter(torch.tensor(
             self.code_weights, requires_grad=False), requires_grad=False)
         self.gt_c_save = self.code_size
@@ -211,17 +215,18 @@ class TopoNetHead(AnchorFreeHead):
             outputs_class = self.cls_branches[lvl](hs[lvl])
             tmp = self.reg_branches[lvl](hs[lvl])
 
-            assert reference.shape[-1] == 3
-            
+            assert reference.shape[-1] == self.pts_dim
+
             bs, num_query, _ = tmp.shape
-            tmp = tmp.view(bs, num_query, -1, 3)
+            tmp = tmp.view(bs, num_query, -1, self.pts_dim)
             tmp = tmp + reference.unsqueeze(2)
             tmp = tmp.sigmoid()
 
             coord = tmp.clone()
             coord[..., 0] = coord[..., 0] * (self.pc_range[3] - self.pc_range[0]) + self.pc_range[0]
             coord[..., 1] = coord[..., 1] * (self.pc_range[4] - self.pc_range[1]) + self.pc_range[1]
-            coord[..., 2] = coord[..., 2] * (self.pc_range[5] - self.pc_range[2]) + self.pc_range[2] 
+            if self.pts_dim == 3:
+                coord[..., 2] = coord[..., 2] * (self.pc_range[5] - self.pc_range[2]) + self.pc_range[2]
             outputs_coord = coord.view(bs, num_query, -1).contiguous()
 
             outputs_classes.append(outputs_class)
