@@ -42,20 +42,17 @@ class TopoNetHead(AnchorFreeHead):
                  pts_dim=3,
                  sync_cls_avg_factor=False,
                  loss_cls=dict(
-                     type='CrossEntropyLoss',
-                     bg_cls_weight=0.1,
-                     use_sigmoid=False,
-                     loss_weight=1.0,
-                     class_weight=1.0),
-                 loss_bbox=dict(type='L1Loss', loss_weight=5.0),
-                 loss_iou=dict(type='GIoULoss', loss_weight=2.0),
+                     type='FocalLoss',
+                     use_sigmoid=True,
+                     gamma=2.0,
+                     alpha=0.25,
+                     loss_weight=1.5),
+                 loss_bbox=dict(type='L1Loss', loss_weight=0.025),
                  train_cfg=dict(
                      assigner=dict(
-                         type='HungarianAssigner',
-                         cls_cost=dict(type='ClassificationCost', weight=1.),
-                         reg_cost=dict(type='BBoxL1Cost', weight=5.0),
-                         iou_cost=dict(
-                             type='IoUCost', iou_mode='giou', weight=2.0))),
+                        type='LaneHungarianAssigner3D',
+                        cls_cost=dict(type='FocalLossCost', weight=1.5),
+                        reg_cost=dict(type='LaneL1Cost', weight=0.025))),
                  test_cfg=dict(max_per_img=100),
                  init_cfg=None,
                  **kwargs):
@@ -88,7 +85,6 @@ class TopoNetHead(AnchorFreeHead):
         self.fp16_enabled = False
         self.loss_cls = build_loss(loss_cls)
         self.loss_bbox = build_loss(loss_bbox)
-        self.loss_iou = build_loss(loss_iou)
 
         if self.loss_cls.use_sigmoid:
             self.cls_out_channels = num_classes
