@@ -13,8 +13,8 @@
 
 </div>
 
-> - Production from [OpenDriveLab](https://opendrivelab.com). Jointly with our fellow collaborators at Huawei Noah's Ark Lab, Fudan University, and [HKU MMLab](http://luoping.me/).
-> - Primary contact: [Tianyu Li](https://scholar.google.com/citations?user=X6vTmEMAAAAJ) ( litianyu@opendrivelab.com ) or/and [Li Chen](https://scholar.google.com/citations?user=ulZxvY0AAAAJ).
+> - Production from [OpenDriveLab](https://opendrivelab.com) at Shanghai AI Lab. Jointly with collaborators at Huawei.
+> - Primary contact: [Tianyu Li](https://scholar.google.com/citations?user=X6vTmEMAAAAJ) ( litianyu@opendrivelab.com )
 
 ---
 
