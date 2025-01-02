@@ -133,6 +133,9 @@ class OpenLaneV2_subset_A_Dataset(Custom3DDataset):
         can_bus = np.zeros(18)
         rotation = Quaternion._from_matrix(np.array(info['pose']['rotation']))
         can_bus[:3] = info['pose']['translation']
+        # BUG: Pointed in https://github.com/OpenDriveLab/TopoNet/issues/21
+        # Should be assigned with rotation.elements
+        # We keep this for reproducing. The can_bus tensor are used in BEV encoder with a MLP
         can_bus[3:7] = rotation
         patch_angle = rotation.yaw_pitch_roll[0] / np.pi * 180
         if patch_angle < 0:
